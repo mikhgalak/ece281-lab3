@@ -112,6 +112,51 @@ begin
 	
 	-- Test Plan Process --------------------------------
 	
+	sim_process : process
+	
+	begin 
+	
+	   w_reset <= '1';
+	   wait for k_clk_period*1;
+	       assert w_lights_L = "000" and w_lights_R = "000" report "Not Lights After Reset" severity failure;
+	       
+	   w_reset <= '0';
+	   wait for k_clk_period*1;
+	   
+	   w_left <= '1'; wait for k_clk_period;
+	       assert w_lights_L = "001" report "Single left light ON" severity failure;
+	              wait for k_clk_period;
+	       assert w_lights_L = "011" report "Two left lights ON" severity failure;
+                  wait for k_clk_period;
+           assert w_lights_L = "111" report "Three left lights ON" severity failure;
+                  wait for k_clk_period;
+           assert w_lights_L = "000" report "No left lights on" severity failure;
+           
+       w_left <= '0'; wait for k_clk_period;
+       
+       w_right<= '1'; wait for k_clk_period;
+           assert w_lights_R = "001" report "One Right Light ON" severity failure;
+                  wait for k_clk_period;
+           assert w_lights_R = "011" report "Two Right Lights ON" severity failure;
+                  wait for k_clk_period;
+           assert w_lights_R = "111" report "Three Right Lights ON" severity failure;
+                  wait for k_clk_period;
+           assert w_lights_R = "000" report "No Right Lights ON" severity failure;
+           
+       w_right <= '0'; wait for k_clk_period;
+       
+       w_right <= '1'; w_left <= '1';
+           wait for k_clk_period;
+           
+           assert w_lights_L = "111" and w_lights_R = "111" report "Hazards Are On" severity failure;
+                  wait for k_clk_period;
+           assert w_lights_L = "000" and w_lights_R = "000" report "Hazards Are Off" severity failure;
+           
+       w_right <= '0'; w_left <= '0';
+       
+       end process;       
+              
+        
 	-----------------------------------------------------	
 	
 end test_bench;

@@ -96,8 +96,8 @@ end thunderbird_fsm;
 
 architecture thunderbird_fsm_arch of thunderbird_fsm is 
 
-    signal f_Q      : std_logic_vector(1 downto 0)  := "000";
-    signal f_Q_next : std_logic_vector(1 downto 0)  := "000";
+    signal f_Q      : std_logic_vector(2 downto 0)  := "000";
+    signal f_Q_next : std_logic_vector(2 downto 0)  := "000";
 
 -- CONSTANTS ------------------------------------------------------------------
   
@@ -117,7 +117,7 @@ begin
                 or (f_Q(2) and (not f_Q(1)) and f_Q(0))
                 or (f_Q(2) and f_Q(1) and (not f_Q(0)));
                 
-    f_Q_next(1) <= ((not f_Q(2)) and (not f_Q(1)) and (not f_Q(0)) and i_left and (not i_right))
+    f_Q_next(2) <= ((not f_Q(2)) and (not f_Q(1)) and (not f_Q(0)) and i_left and (not i_right))
                 or ((not f_Q(2)) and f_Q(1) and f_Q(0))
                 or (f_Q(2) and (not f_Q(1)) and f_Q(0))
                 or (f_Q(2) and f_Q(1) and (not f_Q(0)));
