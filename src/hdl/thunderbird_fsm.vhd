@@ -11,8 +11,8 @@
 --| ---------------------------------------------------------------------------
 --|
 --| FILENAME      : thunderbird_fsm.vhd
---| AUTHOR(S)     : Capt Phillip Warner, Capt Dan Johnson
---| CREATED       : 03/2017 Last modified 06/25/2020
+--| AUTHOR(S)     : Capt Phillip Warner, Capt Dan Johnson, & C3C Mikhail V Galaktionov
+--| CREATED       : 03/2017 Last modified April 1st, 2024
 --| DESCRIPTION   : This file implements the ECE 281 Lab 2 Thunderbird tail lights
 --|					FSM using enumerated types.  This was used to create the
 --|					erroneous sim for GR1
@@ -104,7 +104,7 @@ architecture thunderbird_fsm_arch of thunderbird_fsm is
 begin
 
 	-- CONCURRENT STATEMENTS --------------------------------------------------------	
-	
+	-- The next state logic for the FSM and its implementation
     ---------------------------------------------------------------------------------
 	
 	f_Q_next(0) <= ((not f_Q(2)) and (not f_Q(1)) and (not f_Q(0)) and i_left and (not i_right))
@@ -122,6 +122,7 @@ begin
                 or (f_Q(2) and (not f_Q(1)) and f_Q(0))
                 or (f_Q(2) and f_Q(1) and (not f_Q(0)));
     
+    --Since this is the output logic it should be noted that the LSB of o_lights_R is RA and RC is the MSB.
     o_lights_L(2) <= ((not f_Q(2)) and (not f_Q(1)) and f_Q(0))
                   or (f_Q(2) and f_Q(1) and f_Q(0));
     o_lights_L(1) <= ((not f_Q(2)) and (not f_Q(1)) and f_Q(0))
@@ -154,9 +155,9 @@ begin
     begin
   
        if i_reset = '1' then 
-            f_Q <= "000";
+            f_Q <= "000"; -- When the Reset state is turned off
        elsif  (rising_edge(i_clk)) then 
-            f_Q <= f_Q_next;
+            f_Q <= f_Q_next; -- Allows the next state to become the current state of the FSM
        end if;
        
        

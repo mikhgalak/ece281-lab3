@@ -11,8 +11,8 @@
 --| ---------------------------------------------------------------------------
 --|
 --| FILENAME      : thunderbird_fsm_tb.vhd (TEST BENCH)
---| AUTHOR(S)     : Capt Phillip Warner
---| CREATED       : 03/2017
+--| AUTHOR(S)     : Capt Phillip Warner & C3C Mikhail V Galaktionov
+--| CREATED       : 03/2017 Modified: April 1st, 2024
 --| DESCRIPTION   : This file tests the thunderbird_fsm modules.
 --|
 --|
